@@ -5,7 +5,7 @@ import axios from 'axios';
 // 未設定の場合はローカル開発用 URL を使用
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
 
-function DoneList() {
+function DoneList({ shareId }) {
   const [doneItems, setDoneItems] = useState([]);
   const [editingComment, setEditingComment] = useState(null);
   const [newComment, setNewComment] = useState('');
@@ -13,7 +13,7 @@ function DoneList() {
   // やったことリストを取得
   const fetchDoneItems = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/done`);
+      const response = await axios.get(`${API_BASE_URL}/lists/${shareId}/done`);
       setDoneItems(response.data);
     } catch (error) {
       console.error('やったことリストの取得に失敗しました:', error);
@@ -23,7 +23,7 @@ function DoneList() {
   // コメントを更新
   const updateComment = async (doneId) => {
     try {
-      const response = await axios.put(`${API_BASE_URL}/done/${doneId}/comment`, {
+      const response = await axios.put(`${API_BASE_URL}/lists/${shareId}/done/${doneId}/comment`, {
         comment: newComment
       });
       setDoneItems(doneItems.map(item => 
@@ -59,8 +59,10 @@ function DoneList() {
   };
 
   useEffect(() => {
-    fetchDoneItems();
-  }, []);
+    if (shareId) {
+      fetchDoneItems();
+    }
+  }, [shareId]);
 
   return (
     <div>

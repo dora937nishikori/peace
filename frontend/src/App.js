@@ -1,35 +1,20 @@
-import React, { useState } from 'react';
-import TodoList from './components/TodoList';
-import DoneList from './components/DoneList';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import ListPage from './pages/ListPage';
+import './index.css';
 
 function App() {
-  const [currentTab, setCurrentTab] = useState('todo');
-
   return (
-    <div className="container">
-      <h1 className="header">やりたいことリスト管理</h1>
-      
-      <div className="tabs-container">
-        <div className="tabs">
-          <div 
-            className={`tab ${currentTab === 'todo' ? 'active' : ''}`}
-            onClick={() => setCurrentTab('todo')}
-          >
-            やりたいこと
-          </div>
-          <div 
-            className={`tab ${currentTab === 'done' ? 'active' : ''}`}
-            onClick={() => setCurrentTab('done')}
-          >
-            やったこと
-          </div>
-        </div>
-        
-        <div className="tab-content">
-          {currentTab === 'todo' ? <TodoList /> : <DoneList />}
-        </div>
+    <Router>
+      <div className="container">
+        <h1 className="header">やりたいことリスト管理</h1>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/list/:shareId" element={<ListPage />} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 }
 

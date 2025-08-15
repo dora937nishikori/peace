@@ -5,7 +5,7 @@ import axios from 'axios';
 // 未設定の場合はローカル開発用 URL を使用
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
 
-function TodoList() {
+function TodoList({ shareId, onTodoComplete }) {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
   const [newCategory, setNewCategory] = useState('つくる');
@@ -20,7 +20,7 @@ function TodoList() {
   // やりたいことリストを取得
   const fetchTodos = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/todos`);
+      const response = await axios.get(`${API_BASE_URL}/lists/${shareId}/todos`);
       setTodos(response.data);
     } catch (error) {
       console.error('やりたいことリストの取得に失敗しました:', error);
@@ -42,7 +42,7 @@ function TodoList() {
     if (newTodo.trim() === '') return;
     
     try {
-      const response = await axios.post(`${API_BASE_URL}/todos`, {
+      const response = await axios.post(`${API_BASE_URL}/lists/${shareId}/todos`, {
         title: newTodo,
         category: newCategory
       });
@@ -57,7 +57,7 @@ function TodoList() {
   // やりたいことを編集
   const updateTodo = async (todoId) => {
     try {
-      const response = await axios.put(`${API_BASE_URL}/todos/${todoId}`, {
+      const response = await axios.put(`${API_BASE_URL}/lists/${shareId}/todos/${todoId}`, {
         title: editTitle,
         category: editCategory
       });
@@ -89,12 +89,13 @@ function TodoList() {
   // やりたいことを完了にする
   const completeTodo = async (todoId) => {
     try {
-      await axios.post(`${API_BASE_URL}/todos/${todoId}/complete`, {
+      await axios.post(`${API_BASE_URL}/lists/${shareId}/todos/${todoId}/complete`, {
         comment: comment
       });
       setTodos(todos.filter(todo => todo.id !== todoId));
       setShowCommentFor(null);
       setComment('');
+      onTodoComplete(); // 親コンポーネントに通知
     } catch (error) {
       console.error('やりたいことの完了処理に失敗しました:', error);
     }
@@ -138,9 +139,11 @@ function TodoList() {
   };
 
   useEffect(() => {
-    fetchTodos();
+    if (shareId) {
+      fetchTodos();
+    }
     fetchCategories();
-  }, []);
+  }, [shareId]);
 
   const groupedTodos = groupAndSortTodos();
 
