@@ -5,7 +5,7 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # データベース設定
 # 本番(Render)では環境変数 DATABASE_URL(PostgreSQL) を使用し、
