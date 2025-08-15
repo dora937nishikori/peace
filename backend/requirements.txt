@@ -5,4 +5,4 @@ Flask-SQLAlchemy==3.0.5
 
 # Render での本番運用用
 gunicorn
-psycopg2-binary 
+psycopg2-binary
