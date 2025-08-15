@@ -5,7 +5,10 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+
+# フロントエンドのURLを環境変数から取得し、なければ "*" にフォールバック
+frontend_url = os.environ.get('FRONTEND_URL', '*')
+CORS(app, resources={r"/*": {"origins": frontend_url}})
 
 # データベース設定
 # 本番(Render)では環境変数 DATABASE_URL(PostgreSQL) を使用し、
