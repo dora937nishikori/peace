@@ -401,3 +401,98 @@ code {
 .comment-button:hover {
   background-color: #1976D2;
 } 
+
+/* =================================== */
+/* レスポンシブ対応 (スマホ向け)        */
+/* =================================== */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  .header {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  /* --- 入力フォーム --- */
+  .input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .input-field,
+  .category-select,
+  .add-button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .input-field {
+    margin-right: 0;
+  }
+  
+  .category-select {
+    margin-right: 0;
+  }
+
+  /* --- リストヘッダー --- */
+  .list-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .list-header h2 {
+    margin-bottom: 10px;
+  }
+
+  /* --- リストアイテム --- */
+  .list-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .item-content {
+    margin-bottom: 10px;
+  }
+  
+  .item-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .item-actions .edit-button,
+  .item-actions .complete-button {
+    margin-left: 10px;
+    margin-bottom: 0;
+  }
+
+  /* --- 編集フォーム --- */
+  .edit-section {
+    width: 100%;
+  }
+
+  .edit-group {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 10px;
+  }
+
+  .edit-input,
+  .edit-category-select {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .edit-buttons {
+    justify-content: flex-end;
+  }
+
+  /* --- ホームページ --- */
+  .homepage {
+    padding: 20px;
+  }
+} 
